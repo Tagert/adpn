@@ -1,6 +1,7 @@
+import { FlatCompat } from "@eslint/eslintrc";
+
 import { dirname } from "path";
 import { fileURLToPath } from "url";
-import { FlatCompat } from "@eslint/eslintrc";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -20,13 +21,11 @@ const eslintConfig = [
     rules: {
       "no-undef": "off",
       "@typescript-eslint/no-unused-vars": ["warn"],
-      "import/order": [
-        "error",
-        { groups: [["builtin", "external", "internal"]] },
-      ],
+      "import/order": "off",
       "consistent-return": "warn",
       "no-console": ["warn", { allow: ["warn", "error"] }],
       "no-duplicate-imports": ["error", { includeExports: true }],
+      "tailwindcss/classnames-order": "off",
     },
     settings: {
       tailwindcss: {

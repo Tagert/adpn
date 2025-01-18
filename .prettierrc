@@ -11,5 +11,11 @@
   "quoteProps": "as-needed",
   "htmlWhitespaceSensitivity": "ignore",
   "proseWrap": "preserve",
-  "plugins": ["prettier-plugin-tailwindcss"]
+  "plugins": [
+    "@trivago/prettier-plugin-sort-imports",
+    "prettier-plugin-tailwindcss"
+  ],
+  "importOrder": ["^react$", "^next$", "^[a-z]", "^@/(.*)$", "^[./]"],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true
 }
