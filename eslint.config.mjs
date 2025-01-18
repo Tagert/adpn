@@ -14,7 +14,7 @@ const eslintConfig = [
     "next/core-web-vitals",
     "next/typescript",
     "plugin:tailwindcss/recommended",
-    "prettier",
+    "prettier"
   ),
   {
     rules: {
@@ -27,6 +27,11 @@ const eslintConfig = [
       "consistent-return": "warn",
       "no-console": ["warn", { allow: ["warn", "error"] }],
       "no-duplicate-imports": ["error", { includeExports: true }],
+    },
+    settings: {
+      tailwindcss: {
+        callees: ["cn"],
+      },
     },
   },
 ];
