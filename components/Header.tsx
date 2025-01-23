@@ -1,12 +1,14 @@
 "use client";
 
+import { Session } from "next-auth";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-import { cn } from "@/lib/utils";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { cn, getInitials } from "@/lib/utils";
 
-const Header = () => {
+const Header = ({ session }: { session: Session }) => {
   const pathname = usePathname();
 
   return (
@@ -25,6 +27,22 @@ const Header = () => {
             )}
           >
             Library
+          </Link>
+        </li>
+
+        <li>
+          <Link
+            href="/my-profile"
+            className={cn(
+              "cursor-pointer text-base capitalize",
+              pathname === "/library" ? "text-light-200" : "text-light-100"
+            )}
+          >
+            <Avatar>
+              <AvatarFallback className="bg-amber-100 text-dark-300">
+                {getInitials(session?.user?.name || "IN")}
+              </AvatarFallback>
+            </Avatar>
           </Link>
         </li>
       </ul>

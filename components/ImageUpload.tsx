@@ -38,10 +38,10 @@ const authenticator = async () => {
 const ImageUpload = ({
   onFileChange,
 }: {
-  onFileChange: (FilePath: string) => void;
+  onFileChange: (filePath: string) => void;
 }) => {
   const IKUploadRef = useRef(null);
-  const [file, setFile] = useState<{ FilePath: string } | null>(null);
+  const [file, setFile] = useState<{ filePath: string } | null>(null);
 
   const onError = (error: any) => {
     console.log(error);
@@ -55,7 +55,7 @@ const ImageUpload = ({
 
   const onSuccess = (res: any) => {
     setFile(res);
-    onFileChange(res.FilePath);
+    onFileChange(res.filePath);
 
     toast({
       title: `Image uploaded successfully`,
@@ -92,17 +92,18 @@ const ImageUpload = ({
           alt="upload-icon"
           width={20}
           height={20}
+          className="object-contain"
         />
 
         <p className="text-base text-light-100">Upload a file</p>
-      </button>
 
-      {file && <p className="upload-filename">{file.FilePath}</p>}
+        {file && <p className="upload-filename">{file.filePath}</p>}
+      </button>
 
       {file && (
         <IKImage
-          alt={file.FilePath}
-          path={file.FilePath}
+          alt={file.filePath}
+          path={file.filePath}
           width={500}
           height={300}
         />
