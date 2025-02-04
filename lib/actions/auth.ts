@@ -2,16 +2,15 @@
 
 import { hash } from "bcryptjs";
 import { eq } from "drizzle-orm";
-
-// import { headers } from "next/headers";
-// import { redirect } from "next/navigation";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 
 import { signIn } from "@/auth";
 import { db } from "@/database/drizzle";
 import { users } from "@/database/schema";
-
 // import config from "@/lib/config";
-// import ratelimit from "@/lib/ratelimit";
+import ratelimit from "@/lib/ratelimit";
+
 // import { workflowClient } from "@/lib/workflow";
 
 export const signInWithCredentials = async (
@@ -19,10 +18,10 @@ export const signInWithCredentials = async (
 ) => {
   const { email, password } = params;
 
-  //   const ip = (await headers()).get("x-forwarded-for") || "127.0.0.1";
-  //   const { success } = await ratelimit.limit(ip);
+  const ip = (await headers()).get("x-forwarded-for") || "127.0.0.1";
+  const { success } = await ratelimit.limit(ip);
 
-  //   if (!success) return redirect("/too-fast");
+  if (!success) return redirect("/too-fast");
 
   try {
     const result = await signIn("credentials", {
@@ -36,8 +35,8 @@ export const signInWithCredentials = async (
     }
 
     return { success: true };
-  } catch (error) {
-    console.log(error, "Signin error");
+  } catch (err) {
+    console.error(err, "Signin error");
     return { success: false, error: "Signin error" };
   }
 };
@@ -45,10 +44,10 @@ export const signInWithCredentials = async (
 export const signUp = async (params: AuthCredentials) => {
   const { fullName, email, universityId, password, universityCard } = params;
 
-  //   const ip = (await headers()).get("x-forwarded-for") || "127.0.0.1";
-  //   const { success } = await ratelimit.limit(ip);
+  const ip = (await headers()).get("x-forwarded-for") || "127.0.0.1";
+  const { success } = await ratelimit.limit(ip);
 
-  //   if (!success) return redirect("/too-fast");
+  if (!success) return redirect("/too-fast");
 
   const existingUser = await db
     .select()
@@ -82,8 +81,8 @@ export const signUp = async (params: AuthCredentials) => {
     await signInWithCredentials({ email, password });
 
     return { success: true };
-  } catch (error) {
-    console.log(error, "Signup error");
+  } catch (err) {
+    console.error(err, "Signup error");
     return { success: false, error: "Signup error" };
   }
 };
